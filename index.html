@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L&Cs | Enhance your look, elevate your style</title>
+<meta name="description" content="L&Cs: cosmetics, corsets and crop tops. Enhance your look, elevate your style.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--plum:#2a0e24;--rose:#e0457b;--blush:#fbe4ea;--gold:#c9a24b;--paper:#fff;--muted:#7a5a70;
+--serif:"Bodoni Moda",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0}
+body{font-family:var(--sans);color:var(--plum);background:var(--paper);line-height:1.55}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--rose);outline-offset:3px}
+header{position:sticky;top:0;z-index:5;background:var(--plum);color:var(--blush);display:flex;justify-content:space-between;align-items:center;padding:.8rem 5vw}
+.logo{font-family:var(--serif);font-weight:700;font-size:1.5rem;text-decoration:none}
+nav{display:flex;gap:1.4rem;align-items:center}
+nav a{text-decoration:none;font-size:.95rem}
+.cartbtn{background:var(--rose);color:#fff;border:0;border-radius:99px;padding:.5rem 1rem;font:700 .9rem var(--sans);cursor:pointer}
+.hero{background:var(--plum);color:var(--blush);padding:6vw 5vw 7vw;position:relative;overflow:hidden}
+.hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(5rem,26vw,20rem);line-height:.85;letter-spacing:-.03em;color:var(--rose)}
+.hero h1 span{color:var(--gold);font-style:italic;font-weight:500}
+.hero p.tag{font-family:var(--serif);font-style:italic;font-size:clamp(1.3rem,3.6vw,2.4rem);margin-top:1.5rem;max-width:18em}
+.hero .row{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem}
+.btn{display:inline-block;background:var(--rose);color:#fff;text-decoration:none;border:0;border-radius:4px;padding:.8rem 1.4rem;font:700 1rem var(--sans);cursor:pointer}
+.btn.ghost{background:transparent;border:2px solid var(--blush);color:var(--blush)}
+.prices{background:var(--gold);color:var(--plum);display:flex;flex-wrap:wrap;gap:.5rem 2.5rem;padding:.9rem 5vw;font-weight:700}
+section{padding:4rem 5vw}
+h2{font-family:var(--serif);font-size:clamp(2rem,5vw,3.2rem);margin-bottom:.4rem}
+.sub{color:var(--muted);margin-bottom:1.6rem}
+.tabs{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2rem}
+.tabs button{border:2px solid var(--plum);background:#fff;color:var(--plum);border-radius:99px;padding:.45rem 1.1rem;font:500 .95rem var(--sans);cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--plum);color:var(--blush)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1.6rem}
+.card{display:flex;flex-direction:column}
+.pic{aspect-ratio:4/5;display:grid;place-items:center;border-radius:6px;font-family:var(--serif);font-size:3.4rem;font-weight:700;color:rgba(255,255,255,.9)}
+.pic svg{width:46%;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-size:1.05rem;margin-top:.8rem}
+.card .cat{color:var(--muted);font-size:.85rem}
+.buy{display:flex;justify-content:space-between;align-items:center;margin-top:.6rem}
+.price{font-family:var(--serif);font-weight:700;font-size:1.3rem}
+.add{background:var(--plum);color:#fff;border:0;border-radius:4px;padding:.5rem .9rem;font:500 .9rem var(--sans);cursor:pointer}
+.add:hover{background:var(--rose)}
+.about{background:var(--blush)}
+.about p{max-width:60ch}
+footer{background:var(--plum);color:var(--blush);padding:2.5rem 5vw;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+#drawer{position:fixed;inset:0 0 0 auto;width:min(400px,100%);background:#fff;box-shadow:-8px 0 30px rgba(42,14,36,.3);transform:translateX(105%);transition:transform .3s;z-index:10;display:flex;flex-direction:column;padding:1.2rem}
+#drawer.open{transform:none}
+#drawer header{position:static;background:none;color:var(--plum);padding:0 0 .8rem;border-bottom:1px solid var(--blush)}
+#items{flex:1;overflow:auto;padding:1rem 0}
+.line{display:flex;justify-content:space-between;align-items:center;gap:.6rem;padding:.5rem 0;border-bottom:1px solid var(--blush)}
+.qty button{width:1.7rem;height:1.7rem;border-radius:50%;border:1px solid var(--plum);background:#fff;cursor:pointer}
+.total{display:flex;justify-content:space-between;font-weight:700;font-size:1.2rem;margin:.8rem 0}
+@media (prefers-reduced-motion:reduce){#drawer{transition:none}}
+@media (max-width:560px){nav a.hide{display:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#top">L&amp;Cs</a>
+  <nav>
+    <a class="hide" href="#shop">Shop</a>
+    <a class="hide" href="#about">About</a>
+    <button class="cartbtn" id="openCart" aria-label="Open cart">Cart (<span id="count">0</span>)</button>
+  </nav>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <h1>L<span>&amp;</span>Cs</h1>
+    <p class="tag">Enhance your look, elevate your style.</p>
+    <div class="row">
+      <a class="btn" href="#shop">Shop now</a>
+      <a class="btn ghost" href="#shop" data-jump="Corsets">See corsets</a>
+    </div>
+  </div>
+  <div class="prices"><span>Corsets: <span class="p" data-p="350"></span></span><span>Crop tops: <span class="p" data-p="300"></span></span><span>Cosmetics from <span class="p" data-p="120"></span></span></div>
+
+  <section id="shop">
+    <h2>Shop</h2>
+    <p class="sub">Corsets, crop tops and cosmetics.</p>
+    <div class="tabs" id="tabs" role="group" aria-label="Filter products"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="about" id="about">
+    <h2>About L&amp;Cs</h2>
+    <p>L&amp;Cs is a small shop for pieces that help you feel put together: structured corsets, easy crop tops and cosmetics for every day. Message us on WhatsApp to ask about sizes, shades and delivery.</p>
+  </section>
+</main>
+
+<footer>
+  <strong>L&amp;Cs: enhance your look, elevate your style</strong>
+  <span id="contact"></span>
+</footer>
+
+<aside id="drawer" aria-label="Shopping cart" aria-hidden="true">
+  <header><strong>Your cart</strong><button class="cartbtn" id="closeCart">Close</button></header>
+  <div id="items"></div>
+  <div class="total"><span>Total</span><span id="total"></span></div>
+  <button class="btn" id="checkout">Order on WhatsApp</button>
+</aside>
+
+<script>
+/* ====== EDIT THESE ====== */
+const CURRENCY = "KSh";            // change to $, £, etc.
+const WHATSAPP = "254703296777";   // 0703296777 in international format (Kenya +254)
+/* ======================== */
+
+const PRODUCTS = [
+  {id:1,name:"Classic Lace-Up Corset",cat:"Corsets",price:350,c:"#e0457b"},
+  {id:2,name:"Satin Black Corset",cat:"Corsets",price:350,c:"#2a0e24"},
+  {id:3,name:"Blush Waist Corset",cat:"Corsets",price:350,c:"#c76a8c"},
+  {id:4,name:"Ribbed Crop Top",cat:"Crop tops",price:300,c:"#7a2e5c"},
+  {id:5,name:"Tie-Front Crop Top",cat:"Crop tops",price:300,c:"#e0457b"},
+  {id:6,name:"Knit Crop Top",cat:"Crop tops",price:300,c:"#b5527a"},
+  {id:7,name:"Matte Lipstick",cat:"Cosmetics",price:150,c:"#a3123f"},
+  {id:8,name:"Glow Foundation",cat:"Cosmetics",price:250,c:"#c9a24b"},
+  {id:9,name:"Lip Gloss",cat:"Cosmetics",price:120,c:"#d9608a"},
+  {id:10,name:"Eyeshadow Palette",cat:"Cosmetics",price:280,c:"#5b2a63"}
+];
+const ICONS = {
+  "Corsets":'<path d="M7 3h10l-1 5 2 4-2 4 1 5H7l1-5-2-4 2-4z"/><path d="M10 8h4M10 12h4M10 16h4"/>',
+  "Crop tops":'<path d="M8 4l-5 4 3 4 2-1v6h8v-6l2 1 3-4-5-4c-1 2-5 2-8 0z"/>',
+  "Cosmetics":'<rect x="9" y="11" width="6" height="9" rx="1"/><path d="M10 11V6l2-3 2 3v5"/>'
+};
+const money = n => CURRENCY + " " + n.toLocaleString();
+const cart = {}; // id -> qty (in memory)
+let filter = "All";
+const $ = s => document.querySelector(s);
+
+document.querySelectorAll(".p").forEach(e => e.textContent = money(+e.dataset.p));
+$("#contact").textContent = "WhatsApp: +" + WHATSAPP;
+
+function renderTabs(){
+  $("#tabs").innerHTML = ["All","Corsets","Crop tops","Cosmetics"].map(t =>
+    `<button aria-pressed="${t===filter}" data-t="${t}">${t}</button>`).join("");
+}
+function renderGrid(){
+  $("#grid").innerHTML = PRODUCTS.filter(p => filter==="All"||p.cat===filter).map(p => `
+    <article class="card">
+      <div class="pic" style="background:${p.c}"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[p.cat]}</svg></div>
+      <h3>${p.name}</h3><span class="cat">${p.cat}</span>
+      <div class="buy"><span class="price">${money(p.price)}</span>
+      <button class="add" data-id="${p.id}">Add to cart</button></div>
+    </article>`).join("");
+}
+function renderCart(){
+  const rows = Object.entries(cart).map(([id,q]) => ({p:PRODUCTS.find(x=>x.id==id),q}));
+  $("#items").innerHTML = rows.length ? rows.map(({p,q}) => `
+    <div class="line"><div><strong>${p.name}</strong><br>${money(p.price)}</div>
+    <div class="qty"><button data-d="-1" data-id="${p.id}" aria-label="Remove one">-</button> ${q}
+    <button data-d="1" data-id="${p.id}" aria-label="Add one">+</button></div></div>`).join("")
+    : "<p>Your cart is empty. Add a corset, crop top or cosmetic to start.</p>";
+  const sum = rows.reduce((s,r)=>s+r.p.price*r.q,0);
+  $("#total").textContent = money(sum);
+  $("#count").textContent = rows.reduce((s,r)=>s+r.q,0);
+  $("#checkout").disabled = !rows.length;
+}
+function setDrawer(open){
+  $("#drawer").classList.toggle("open",open);
+  $("#drawer").setAttribute("aria-hidden",!open);
+}
+document.addEventListener("click", e => {
+  const t = e.target;
+  if(t.dataset.t){filter=t.dataset.t;renderTabs();renderGrid();}
+  if(t.dataset.jump){filter=t.dataset.jump;renderTabs();renderGrid();}
+  if(t.classList.contains("add")){cart[t.dataset.id]=(cart[t.dataset.id]||0)+1;renderCart();setDrawer(true);}
+  if(t.dataset.d){const id=t.dataset.id;cart[id]=(cart[id]||0)+ +t.dataset.d;if(cart[id]<=0)delete cart[id];renderCart();}
+});
+$("#openCart").onclick = () => setDrawer(true);
+$("#closeCart").onclick = () => setDrawer(false);
+document.addEventListener("keydown", e => e.key==="Escape" && setDrawer(false));
+$("#checkout").onclick = () => {
+  const lines = Object.entries(cart).map(([id,q]) => { const p=PRODUCTS.find(x=>x.id==id); return `${q} x ${p.name} (${money(p.price*q)})`; });
+  const total = $("#total").textContent;
+  const msg = "Hi L&Cs, I'd like to order:\n" + lines.join("\n") + "\nTotal: " + total;
+  window.open("https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
+};
+renderTabs(); renderGrid(); renderCart();
+</script>
+</body>
+</html>
